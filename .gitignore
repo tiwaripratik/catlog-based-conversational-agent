@@ -1,0 +1,43 @@
+# ─── Environment & Secrets ────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Python ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ─── Virtual Environment ─────────────────────────────────
+venv/
+.venv/
+env/
+
+# ─── IDE ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ─── OS ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─── ML Models (downloaded at runtime) ───────────────────
+models/
+*.bin
+*.safetensors
+
+# ─── Data (regeneratable) ────────────────────────────────
+# Keep catalog.json in repo for reproducibility
+# data/catalog.json
+
+# ─── Logs ────────────────────────────────────────────────
+*.log
+logs/

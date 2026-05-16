@@ -1,0 +1,26 @@
+# render.yaml — Render Deployment Configuration
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: shl-assessment-recommender
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: HF_TOKEN
+        sync: false  # Set manually in Render dashboard
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shl-recommender-db
+          property: connectionString
+      - key: PYTHON_VERSION
+        value: "3.12"
+
+databases:
+  - name: shl-recommender-db
+    plan: free
+    databaseName: shl_recommender
+    postgresMajorVersion: "16"
+    ipAllowList: []  # Allow all (Render internal)
