@@ -161,14 +161,17 @@
 
 ---
 
-## Phase 11: Submission Materials
-- [ ] Public API endpoint URL (both /health and /chat reachable)
-- [ ] Approach document (2 pages max):
-  - [ ] Design choices & architecture rationale
-  - [ ] Hybrid retrieval setup (BM25 + vector) & why
-  - [ ] Prompt design & agent state management
-  - [ ] Evaluation approach & what didn't work
-  - [ ] AI tools used (if any)
+## Phase 11: Submission Materials ✅
+- [x] `APPROACH.md` — 2-page approach document:
+  - [x] Architecture overview with pipeline diagram
+  - [x] Hybrid retrieval design (BM25 + vector) & rationale
+  - [x] Agent state machine (Clarify/Recommend/Refine/Compare/Refuse)
+  - [x] Prompt design & LLM grounding strategy
+  - [x] Evaluation results: 5/5 probes, 0 schema errors, Mean Recall@10 = 0.3562
+  - [x] What didn't work & improvement ideas
+  - [x] AI tools disclosure
+- [x] `README.md` — production-quality with API examples, architecture, project structure
+- [x] All commits pushed to git (3 commits, 30+ files)
 
 ---
 
