@@ -146,15 +146,18 @@
 
 ---
 
-## Phase 10: Deployment
-- [ ] Push to GitHub
-- [ ] Deploy on Render.com
-- [ ] Set env vars: `HF_TOKEN`, `DATABASE_URL`
-- [ ] Build: `pip install -r requirements.txt`
-- [ ] Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-- [ ] Verify `/health` endpoint (cold start < 2 min)
-- [ ] Verify `/chat` endpoint with test conversation
-- [ ] Submit deployed URL via assignment form
+## Phase 10: Deployment ✅ (local ready, needs GitHub push)
+- [x] Initialize git repo with clean `.gitignore`
+- [x] Committed: 29 files, 15,000+ lines
+- [x] SSH key generated for GitHub push
+- [x] `build.sh` — Render build script (pip install + DB setup)
+- [x] `scripts/setup_db.py` — creates tables + ingests catalog with embeddings
+- [x] `Procfile` — `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+- [x] `render.yaml` — Render blueprint (web service + PostgreSQL 16)
+- [x] Local verification: `/health` = ✅, `/chat` = ✅ (4.1s response)
+- [ ] **ACTION NEEDED: Add SSH key to GitHub → Create repo → Push**
+- [ ] **ACTION NEEDED: Deploy on Render.com → Set HF_TOKEN env var**
+- [ ] Verify deployed `/health` and `/chat` endpoints
 
 ---
 
