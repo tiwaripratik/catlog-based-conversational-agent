@@ -10,6 +10,15 @@ Exposes a lightweight ASGI interface:
 import os
 import sys
 
+# Limit CPU threading backends to 1 thread.
+# This prevents PyTorch and NumPy from spawning too many threads, which causes severe 
+# CPU thrashing and context-switching overhead on CPU-limited cloud hosts like Render.
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
 # Ensure current directory is in the Python search path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
