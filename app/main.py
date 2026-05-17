@@ -11,6 +11,7 @@ Request/Response schemas are FIXED per assignment spec.
 Each call must respond within 30 seconds.
 """
 
+import os
 import time
 import traceback
 from contextlib import asynccontextmanager
@@ -18,8 +19,6 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
-
-from app.agent import process_turn
 
 # ─── Pydantic Schemas ────────────────────────────────────────────────
 
@@ -68,17 +67,18 @@ class ChatResponse(BaseModel):
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Pre-load models and connections on startup."""
+    """Start quickly; optionally pre-load models when explicitly enabled."""
     print("[Server] Starting up...")
-    # Eagerly load the retriever and embedding model
-    try:
-        from app.retrieval import get_retriever
-        retriever = get_retriever()
-        # Warm up the model with a dummy query
-        _ = retriever.search_hybrid("test", top_k=1)
-        print("[Server] Retriever and model loaded successfully")
-    except Exception as e:
-        print(f"[Server] WARNING: Failed to pre-load retriever: {e}")
+    if os.environ.get("PRELOAD_RETRIEVER", "").lower() == "true":
+        try:
+            from app.retrieval import get_retriever
+            retriever = get_retriever()
+            _ = retriever.search_hybrid("test", top_k=1)
+            print("[Server] Retriever and model loaded successfully")
+        except Exception as e:
+            print(f"[Server] WARNING: Failed to pre-load retriever: {e}")
+    else:
+        print("[Server] Retriever preload disabled; loading lazily on first chat request")
 
     yield
 
@@ -151,6 +151,8 @@ async def chat(request: ChatRequest):
 
     try:
         # Process the conversation turn
+        from app.agent import process_turn
+
         result = process_turn(messages)
 
         elapsed = time.time() - start_time
