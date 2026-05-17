@@ -11,7 +11,6 @@ All recommended URLs are validated against the catalog stored in PostgreSQL.
 
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from sentence_transformers import SentenceTransformer
 import numpy as np
 import os
 from dataclasses import dataclass, field
@@ -92,12 +91,13 @@ class HybridRetriever:
         self._conn = None
 
     @property
-    def model(self) -> SentenceTransformer:
-        """Lazy-load the embedding model."""
+    def model(self):
+        """Lazy-load the embedding model (only used as local fallback)."""
         if self._model is None:
-            print("[Retriever] Loading embedding model...")
+            print("[Retriever] Loading local embedding model fallback...")
+            from sentence_transformers import SentenceTransformer
             self._model = SentenceTransformer(EMBEDDING_MODEL_NAME)
-            print(f"[Retriever] Model loaded: {EMBEDDING_MODEL_NAME}")
+            print(f"[Retriever] Model loaded fallback: {EMBEDDING_MODEL_NAME}")
         return self._model
 
     def _get_connection(self):
@@ -111,6 +111,24 @@ class HybridRetriever:
 
     def _encode_query(self, query: str) -> str:
         """Encode a text query into a pgvector-formatted string."""
+        hf_token = os.environ.get("HF_TOKEN")
+        if hf_token:
+            try:
+                from huggingface_hub import InferenceClient
+                client = InferenceClient(api_key=hf_token)
+                embedding = client.feature_extraction(query, model="sentence-transformers/" + EMBEDDING_MODEL_NAME)
+                if isinstance(embedding, bytes):
+                    import json
+                    embedding = json.loads(embedding.decode("utf-8"))
+                embedding = np.array(embedding)
+                norm = np.linalg.norm(embedding)
+                if norm > 0:
+                    embedding = embedding / norm
+                return "[" + ",".join(str(float(x)) for x in embedding) + "]"
+            except Exception as e:
+                print(f"[Retriever] WARNING: HuggingFace Inference API failed ({e}). Falling back to local SentenceTransformer...")
+        
+        # Fallback to local model
         embedding = self.model.encode(query, normalize_embeddings=True)
         return "[" + ",".join(str(float(x)) for x in embedding) + "]"
 
