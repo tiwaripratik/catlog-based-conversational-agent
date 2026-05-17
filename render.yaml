@@ -7,7 +7,7 @@ services:
     runtime: python
     plan: free
     buildCommand: chmod +x build.sh && ./build.sh
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn render_entry:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: HF_TOKEN
         sync: false  # Set manually in Render dashboard
