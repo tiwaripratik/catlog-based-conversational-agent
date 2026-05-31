@@ -87,6 +87,11 @@ ipython_config.py
 *.log
 *.sqlite
 *.pdf
+
+# Ignore Markdown files (keep .github templates tracked)
+*.md
+!.github/
+!.github/**
 *.md
 
 # Keep GitHub templates tracked
