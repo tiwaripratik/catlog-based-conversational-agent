@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "catlog-based-conversational-agent"
+version = "0.1.0"
+description = "SHL Assessment Recommender Agent"
+authors = [ { name = "Project Contributors" } ]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+]
+
+[tool.isort]
+profile = "black"

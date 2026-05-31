@@ -20,8 +20,8 @@ import re
 import sys
 import time
 
-# Add project root to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+# Add src directory to path so `app` package can be imported
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 from app.agent import process_turn, classify_intent
 from app.retrieval import get_retriever
