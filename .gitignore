@@ -92,11 +92,7 @@ ipython_config.py
 *.md
 !.github/
 !.github/**
-*.md
-
-# Keep GitHub templates tracked
-!.github/
-!.github/**
+!README.md
 # ─── Environment & Secrets ────────────────────────────────
 .env
 .env.*
