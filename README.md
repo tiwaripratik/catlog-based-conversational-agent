@@ -126,3 +126,8 @@ User → FastAPI /chat → Intent Classifier → Hybrid Retriever → LLM (Llama
 - **Embeddings**: all-MiniLM-L6-v2 (384-dim)
 - **LLM**: Llama 3.1-8B-Instruct (HuggingFace Inference API)
 - **Deployment**: Render.com
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to run tests, format code, and open pull requests. Please follow the project's Code of Conduct: [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
