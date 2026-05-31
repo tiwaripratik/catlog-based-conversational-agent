@@ -1,6 +1,6 @@
 # catlog-based-conversational-agent
 
-AI-powered conversational agent that helps hiring managers find the right SHL assessments through natural dialogue. Built as a stateless FastAPI service with hybrid retrieval (BM25 + Vector Cosine Similarity).
+AI-powered conversational agent that helps hiring managers find the right person through natural dialogue. Built as a stateless FastAPI service with hybrid retrieval (BM25 + Vector Cosine Similarity).
 
 ## Quick Start
 
