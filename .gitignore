@@ -87,7 +87,11 @@ ipython_config.py
 *.log
 *.sqlite
 *.pdf
+*.md
 
+# Keep GitHub templates tracked
+!.github/
+!.github/**
 # ─── Environment & Secrets ────────────────────────────────
 .env
 .env.*
